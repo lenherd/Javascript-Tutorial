@@ -1,0 +1,60 @@
+1. AsyncFunction helps us to write asynchronous code i.e further simplifying promises.
+2. They allow you to write promise-based code as if it were synchronous, but without blocking the main thread.
+3. The async function declaration defines an asynchronous function, 
+   which returns an "AsyncFunction object".
+4. Syntax
+
+    async function name([param,[param,[ ... param]]]) {
+        //statements
+    }
+5.
+    i. When an async function is called, it returns a Promise
+    ii.When the async function returns a value, the Promise will be resolved with the returned value
+    iii.When the async function throws an exception or some value, the Promise will be rejected with the thrown value.
+
+6. An async function can contain an "await expression", that pauses the execution of the async function 
+   and waits for the passed Promise's resolution, and then resumes the async function's execution
+   and returns the resolved value.
+7. Example:
+
+    async function myFirstAsyncFunction() {
+    try {
+        const fulfilledValue = await promise;
+        }
+    catch (rejectedValue) {
+        // …
+        }
+    }
+    
+8. Tips to convert promise to async/await
+    
+    i.Whenever you need to return a promise in a function, you prepend async to that function.
+     E.g. async function showOff(phone)
+    ii. Whenever you need to call a promise, you prepend with await. 
+    E.g. let phone = await willIGetNewPhone; and 
+        let message = await showOff(phone);.
+    iii. Use try { ... } catch(error) { ... } to catch promise error, the rejected promise.
+
+9. Converting promises to aysnc/await
+
+//Promise example
+function logFetch(url) {
+    return fetch(url)
+    .then(response => response.text())
+    .then(text => {
+      console.log(text);
+    }).catch(err => {
+      console.error('fetch failed', err);
+    });
+}
+
+//converted async-await example
+async function logFetch(url) {
+  try {
+    const response = await fetch(url);
+    console.log(await response.text());
+  }
+  catch (err) {
+    console.log('fetch failed', err);
+  }
+}

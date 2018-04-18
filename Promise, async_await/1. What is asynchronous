@@ -1,0 +1,76 @@
+//NET NINJA YOUTUBE
+
+Tutorial - 1
+
+1. Asynchronous means it Can start something, and finish it later
+
+    Javascript that we write, runs on a single thread.
+    Synchronous code waits for 1 action to complete, then moves to the next
+        $Eg:
+        var article = readSync(article_location);   //lets say this take 10 seconds
+        console.log(article);
+
+        //if it is Synchronous it will wait till the above file is read, and then come here. It takes time
+        var authors = readSync(authors_location);
+        console.log(authors);
+
+        Now lets try it with Asynchronous method
+        Eg:
+        var article = readAsync(article_location,function(){
+             console.log(article);
+        });
+       
+        var authors = readAsync(authors_location,function(){
+             console.log(authors);
+        });
+
+        //So here because of the callback function, we make use of multiple threads, such that theres no wait
+
+2. How it does is, the main code runs on javascript thread, but when we receive an Asynchronous request,
+   it goes outside the javascript thread to a new thread there finishes work. And when the work is finished calls
+   its callback function.
+
+3. Different ways of Asynchronous
+    i.(callback) - good method --> uses ajax callbacks to be asynchronous(i dont know ajax or jquery)
+    But creates callback hell, where one callback is depended on another and so on.
+    Solution - Split the code into different functions with appropriate names
+
+    ii. (promises) = better method --> made shorter using async/await
+
+    iii. (generator ) - best method
+
+Tutorial - 3
+
+/*********************SYNCHRONOUS CALLBACK************************************
+Type - 1
+var fruits = ['banana','apple','kiwi'];
+
+//here callback function is called inside forEach brackets as a parameter.
+fruits.forEach(function(val){
+    console.log(val);
+}); 
+console.log("done");
+
+******************************************************************************
+Type -2
+
+function callback(val){
+    console.log(val);
+}
+
+var fruits = ['banana','apple','kiwi'];
+
+//even here we do the same, but we create a function outside.
+fruits.forEach(callback);
+console.log("done");
+
+*********************SYNCHRONOUS CALLBACK************************************/
+
+Tutorial - 4 Promises
+
+1. A promise is just an object which represents an action that hasn't finished yet, but wil finish eventually
+    It is a placeholder object, where we can register our callbacks for success or failure
+
+2. Promises help you to control the asynchronous flow in a Synchronous manner
+
+3. Promises can be further shortened using async/await

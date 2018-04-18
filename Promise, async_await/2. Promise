@@ -1,0 +1,82 @@
+1. Promise object is an object which represents an action that hasn't finished yet, but wil finish eventually
+2. It represents the eventual completion (or failure) of an asynchronous operation.
+
+3. Syntax
+    new Promise( /* executor */ function(resolve, reject) { } );
+
+    i. executor is a function that is passed with the arguments resolve and reject
+    ii. the executor function is called before the Promise constructor even returns the created object
+    iii.  The resolve and reject functions, when called, resolve or reject the promise, respectively
+    iv. The executor normally initiates some asynchronous work, and then, once that completes, 
+        either calls the resolve function to resolve the promise or else rejects it if an error occurred.
+
+4. A Promise is in one of these states:
+
+    i. pending: initial state, neither fulfilled nor rejected.
+    ii. fulfilled: meaning that the operation completed successfully.
+    iii. rejected: meaning that the operation failed.
+
+
+                                            ------>Asynchronous action
+                                            '
+                                            '
+                                            '
+                        (fulfil)            '
+                        '----------->.then(onFullfilment)'
+                        '                                '
+                        '                                '
+                        '                                '(return)
+    Promise ------------>                                '------------>Promise------------>.then()
+    (pending)           '                                '             (pending)            .catch()
+                        '                                '
+                        '                                '
+                        '----------->.then(onRejection)  '
+                        (reject)     .catch(onRejection)
+                                            '
+                                            '
+                                            '
+                                            '
+                                            '----->Error handling  
+
+5. Note: A promise is said to be settled if it is either fulfilled or rejected, but not pending.
+
+6. Basic Example
+
+let myFirstPromise = new Promise((resolve, reject) => {
+  // We call resolve(...) when what we were doing asynchronously was successful, and reject(...) when it failed.
+  // In this example, we use setTimeout(...) to simulate async code. 
+  setTimeout(function(){
+    resolve("Success!"); // Yay! Everything went well!
+  }, 250);
+});
+
+myFirstPromise.then((successMessage) => {
+  // successMessage is whatever we passed in the resolve(...) function above.
+  // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+  console.log("Yay! " + successMessage);
+});
+
+7. Advanced Example
+
+var promise = new Promise(function(resolve, reject) {
+  // do a thing, possibly async, then…
+
+  if (// everything turned out fine ) {
+    resolve("Stuff worked!");
+  }
+  else {
+    reject(Error("It broke"));
+  }
+});
+
+//Here's how you use that promise:
+
+promise.then(function(result) {
+  console.log(result); // "Stuff worked!"
+}, function(err){                                //or u can use .catch(function(error) 
+  console.log(err); // Error: "It broke"
+});
+
+//then() takes two arguments, a callback for a success case, and another for the failure case.
+// Both are optional, so you can add a callback for the success or failure case only.
+//or instead of 2nd argument for failure u can use .catch()
